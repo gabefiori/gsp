@@ -74,7 +74,6 @@ func TestFind(t *testing.T) {
 			}()
 
 			var paths []string
-
 			for path := range resultCh {
 				paths = append(paths, path)
 			}

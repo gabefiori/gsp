@@ -35,7 +35,6 @@ func NewFzf(args []string) (Selector, error) {
 	}
 
 	options, err := fzf.ParseOptions(true, nil)
-
 	if err != nil {
 		return nil, err
 	}

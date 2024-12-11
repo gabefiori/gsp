@@ -16,7 +16,6 @@ import (
 // Run executes the main logic of the application using the provided configuration.
 func Run(cfg *config.Config) error {
 	home, err := homedir.Dir()
-
 	if err != nil {
 		return err
 	}
@@ -88,15 +87,12 @@ func Run(cfg *config.Config) error {
 		return err
 	}
 
-	t := selector.TypeFromStr(cfg.Selector)
-	s, err := selector.New(t)
-
+	s, err := selector.New(selector.TypeFromStr(cfg.Selector))
 	if err != nil {
 		return err
 	}
 
 	result, err := s.Run(resultCh)
-
 	// If the selector is canceled, result will be empty.
 	if err != nil || result == "" {
 		return err

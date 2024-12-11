@@ -32,7 +32,6 @@ func (s *Source) Find(resultCh chan<- string, formatFn func(string) string) erro
 	s.formatFn = formatFn
 
 	expanded, err := homedir.Expand(s.Path)
-
 	if err != nil {
 		return err
 	}
@@ -55,7 +54,6 @@ func (s *Source) Find(resultCh chan<- string, formatFn func(string) string) erro
 
 func (s *Source) depthZero(resultCh chan<- string) error {
 	isDir, err := isPathDir(s.Path)
-
 	if err != nil {
 		return err
 	}
@@ -63,6 +61,7 @@ func (s *Source) depthZero(resultCh chan<- string) error {
 	if isDir {
 		resultCh <- s.formatFn(s.Path)
 	}
+
 	return nil
 }
 
@@ -127,7 +126,6 @@ func currentDepth(root, curr string) uint8 {
 
 func isPathDir(path string) (bool, error) {
 	info, err := os.Stat(path)
-
 	if err != nil {
 		return false, err
 	}

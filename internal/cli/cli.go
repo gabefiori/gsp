@@ -27,7 +27,6 @@ func Run() error {
 		Usage:       "Select projects",
 		Description: "A simple tool for quickly selecting projects.",
 		Version:     getVersion(),
-
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "config",
@@ -105,7 +104,6 @@ func Run() error {
 			}
 
 			cfg, err := config.Load(params)
-
 			if err != nil {
 				return err
 			}

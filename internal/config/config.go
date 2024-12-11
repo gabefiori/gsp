@@ -46,13 +46,11 @@ type LoadParams struct {
 // Load reads the configuration from a JSON file at the specified path.
 func Load(params *LoadParams) (*Config, error) {
 	path, err := homedir.Expand(params.Path)
-
 	if err != nil {
 		return nil, err
 	}
 
 	file, err := os.Open(path)
-
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +62,6 @@ func Load(params *LoadParams) (*Config, error) {
 	cfg.ExpandOutput = true
 
 	decoder := json.NewDecoder(file)
-
 	if err := decoder.Decode(&cfg); err != nil {
 		return nil, err
 	}

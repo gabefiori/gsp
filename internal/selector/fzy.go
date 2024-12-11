@@ -29,7 +29,6 @@ func (f *Fzy) Run(inputChan chan string) (string, error) {
 	cmd.Stderr = f.errBuf
 
 	stdin, err := cmd.StdinPipe()
-
 	if err != nil {
 		return "", err
 	}
@@ -45,12 +44,10 @@ func (f *Fzy) Run(inputChan chan string) (string, error) {
 
 		for input := range inputChan {
 			inputBuf.Reset()
-
 			inputBuf.WriteString(input)
 			inputBuf.WriteByte('\n')
 
 			_, err = stdin.Write(inputBuf.Bytes())
-
 			if err != nil {
 				f.errBuf.WriteString(err.Error())
 			}
