@@ -2,12 +2,13 @@ package cli
 
 import (
 	"os"
-	"runtime/debug"
 
 	"github.com/gabefiori/gsp/internal/app"
 	"github.com/gabefiori/gsp/internal/config"
 	"github.com/urfave/cli/v2"
 )
+
+const version = "unknown"
 
 // Run initializes and executes the command-line interface (CLI) application.
 func Run() error {
@@ -26,7 +27,7 @@ func Run() error {
 		HelpName:    "gsp",
 		Usage:       "Select projects",
 		Description: "A simple tool for quickly selecting projects.",
-		Version:     getVersion(),
+		Version:     version,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "config",
@@ -117,12 +118,4 @@ func Run() error {
 	}
 
 	return nil
-}
-
-func getVersion() string {
-	if info, ok := debug.ReadBuildInfo(); ok {
-		return info.Main.Version
-	}
-
-	return "unknown"
 }
