@@ -88,7 +88,10 @@ func action(ctx context.Context, c *cli.Command) error {
 		Measure:  c.Bool(flagMeasure.Name),
 		List:     c.Bool(flagList.Name),
 		Selector: c.String(flagSelector.Name),
-		Sort:     c.String(flagSort.Name),
+	}
+
+	if c.IsSet(flagSort.Name) {
+		params.Sort = c.String(flagSort.Name)
 	}
 
 	params.Unique = optionalBoolFlag(flagUnique, c)

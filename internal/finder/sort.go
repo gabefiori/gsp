@@ -1,6 +1,9 @@
 package finder
 
-import "sort"
+import (
+	"sort"
+	"strings"
+)
 
 type SortType int8
 
@@ -11,7 +14,7 @@ const (
 )
 
 func SortTypeFromStr(s string) SortType {
-	switch s {
+	switch strings.ToLower(s) {
 	case "asc":
 		return AscSort
 	case "desc":
