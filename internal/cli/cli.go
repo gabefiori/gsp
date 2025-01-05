@@ -37,14 +37,12 @@ var (
 		Name:    "selector",
 		Aliases: []string{"sl"},
 		Usage:   "Selector for displaying projects (available options: 'fzf', 'fzy', 'sk')",
-		Value:   "fzf",
 	}
 
 	flagSort = &cli.StringFlag{
 		Name:    "sort",
 		Aliases: []string{"s"},
 		Usage:   "Specify the sort order (available options: 'asc', 'desc')",
-		Value:   "",
 	}
 
 	flagUnique = &cli.BoolFlag{

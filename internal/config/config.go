@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"os"
 
 	"github.com/gabefiori/gsp/internal/finder"
@@ -82,7 +83,7 @@ func Load(params *LoadParams) (*Config, error) {
 	}
 
 	if cfg.Selector == "" {
-		cfg.Selector = "fzf"
+		return nil, errors.New("Invalid selector")
 	}
 
 	if params.Sort != "" {

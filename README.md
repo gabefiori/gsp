@@ -68,10 +68,10 @@ Create a configuration file at `~/.config/gsp/config.json`:
 
 ```json
 {
-  "expand_output": true,
   "selector": "fzf",
-  "unique": true,
   "sort": "asc",
+  "unique": true,
+  "expand_output": true,
 
   "sources": [
     {
@@ -105,7 +105,7 @@ Create a configuration file at `~/.config/gsp/config.json`:
 </details>
 
 <details>
-<summary>selector (optional, defaults to "fzf")</summary>
+<summary>selector</summary>
 
 > Specifies the tool used for displaying projects. Available options are:
 > - `fzf`: [source](https://github.com/junegunn/fzf).
@@ -137,7 +137,7 @@ Create a configuration file at `~/.config/gsp/config.json`:
 --config file, -c file        Load configuration from file (default: "~/.config/gsp/config.json")
 --list, -l                    List projects to stdout (default: false)
 --measure, -m                 Measure performance (time taken and number of items processed) (default: false)
---selector value, --sl value  Selector for displaying projects (available options: 'fzf', 'fzy', 'sk') (default: "fzf")
+--selector value, --sl value  Selector for displaying projects (available options: 'fzf', 'fzy', 'sk')
 --sort value, -s value        Specify the sort order (available options: 'asc', 'desc')
 --unique, -u                  Display only unique projects (default: false)
 --expand-output, --eo         Expand the output (default: true)
