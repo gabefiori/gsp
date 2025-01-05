@@ -1,6 +1,9 @@
 package selector
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 // Type represents the different types of selectors available.
 type Type uint8
@@ -12,16 +15,16 @@ const (
 	TypeSkim
 )
 
-func TypeFromStr(s string) Type {
+func TypeFromStr(s string) (Type, error) {
 	switch strings.ToLower(s) {
 	case "fzy":
-		return TypeFzy
+		return TypeFzy, nil
 	case "fzf":
-		return TypeFzf
+		return TypeFzf, nil
 	case "sk":
-		return TypeSkim
+		return TypeSkim, nil
 	default:
-		return UnknownType
+		return UnknownType, fmt.Errorf("Invalid selector '%s'", s)
 	}
 }
 
@@ -40,6 +43,6 @@ func New(t Type) (Selector, error) {
 	case TypeSkim:
 		return NewCmd("sk"), nil
 	default:
-		return NewCmd("fzf"), nil
+		return nil, fmt.Errorf("Failed to start selector")
 	}
 }

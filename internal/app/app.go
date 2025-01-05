@@ -40,6 +40,11 @@ func New(cfg *config.Config) (*App, error) {
 		return nil, err
 	}
 
+	st, err := selector.TypeFromStr(cfg.Selector)
+	if err != nil {
+		return nil, err
+	}
+
 	var m Mode
 	if cfg.List {
 		m = ModeList
@@ -52,8 +57,8 @@ func New(cfg *config.Config) (*App, error) {
 		home:         home,
 		sources:      cfg.Sources,
 		ch:           make(chan string, len(cfg.Sources)),
-		selectorType: selector.TypeFromStr(cfg.Selector),
 		sortType:     finder.SortTypeFromStr(cfg.Sort),
+		selectorType: st,
 		expandOutput: cfg.ExpandOutput,
 	}, nil
 }

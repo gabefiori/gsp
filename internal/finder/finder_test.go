@@ -71,4 +71,3 @@ func createNestedDirs(b *testing.B, baseDir string, currentDepth, maxDepth int) 
 		createNestedDirs(b, dirPath, currentDepth+1, maxDepth)
 	}
 }
-
