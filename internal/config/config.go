@@ -37,8 +37,8 @@ type LoadParams struct {
 	Selector     string
 	Sort         string
 	Path         string
-	ExpandOutput *bool
-	Unique       *bool
+	ExpandOutput int8
+	Unique       int8
 	Measure      bool
 	List         bool
 }
@@ -69,12 +69,12 @@ func Load(params *LoadParams) (*Config, error) {
 	cfg.Measure = params.Measure
 	cfg.List = params.List
 
-	if params.ExpandOutput != nil {
-		cfg.ExpandOutput = *params.ExpandOutput
+	if params.ExpandOutput != 0 {
+		cfg.ExpandOutput = params.ExpandOutput == 1
 	}
 
-	if params.Unique != nil {
-		cfg.Unique = *params.Unique
+	if params.Unique != 0 {
+		cfg.Unique = params.Unique == 1
 	}
 
 	if params.Selector != "" {
