@@ -12,14 +12,7 @@ import (
 func BenchmarkRun(b *testing.B) {
 	tempDir := b.TempDir()
 	baseDir := filepath.Join(tempDir, "base")
-	numDirs := 200
-
-	for i := 0; i < numDirs; i++ {
-		dirPath := filepath.Join(baseDir, fmt.Sprintf("dir-%d", i))
-		assert.NoError(b, os.MkdirAll(dirPath, 0755))
-	}
-
-	source := Source{Path: baseDir, Depth: 3}
+	depths := []int{0, 1, 2, 3}
 
 	tests := []struct {
 		name     string
@@ -34,26 +27,48 @@ func BenchmarkRun(b *testing.B) {
 		{"DescSort_Unique", DescSort, true},
 	}
 
-	for _, tt := range tests {
-		b.Run(tt.name, func(b *testing.B) {
-			for i := 0; i < b.N; i++ {
-				resultCh := make(chan string)
+	for _, depth := range depths {
+		createNestedDirs(b, baseDir, 0, depth)
+		source := Source{OriginalPath: baseDir, Depth: uint8(depth)}
 
+		for _, tt := range tests {
+			b.Run(fmt.Sprintf("Depth_%d/%s", depth, tt.name), func(b *testing.B) {
+				resultCh := make(chan string, 3)
 				opts := &FinderOpts{
-					Sources:  []Source{source},
+					Sources:  []Source{source, source, source},
 					HomeDir:  baseDir,
 					ResultCh: resultCh,
 					SortType: tt.sortType,
 					Unique:   tt.unique,
 				}
 
-				go Run(opts)
+				b.ResetTimer()
+				for i := 0; i < b.N; i++ {
+					go Run(opts)
 
-				for range resultCh {
+					for range resultCh {
+					}
+
+					//FIXME: this affects the benchmark.
+					resultCh = make(chan string, 3)
+					opts.ResultCh = resultCh
 				}
-			}
-		})
+			})
+		}
 	}
 
 	assert.NoError(b, os.RemoveAll(baseDir))
 }
+
+func createNestedDirs(b *testing.B, baseDir string, currentDepth, maxDepth int) {
+	if currentDepth > maxDepth {
+		return
+	}
+
+	for i := 0; i < 5; i++ {
+		dirPath := filepath.Join(baseDir, fmt.Sprintf("dir-%d", i))
+		assert.NoError(b, os.MkdirAll(dirPath, 0755))
+		createNestedDirs(b, dirPath, currentDepth+1, maxDepth)
+	}
+}
+

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gabefiori/gsp/internal/config"
@@ -29,6 +30,7 @@ type App struct {
 	sources      []finder.Source
 	selectorType selector.Type
 	sortType     finder.SortType
+	expandOutput bool
 	Mode
 }
 
@@ -36,12 +38,6 @@ func New(cfg *config.Config) (*App, error) {
 	home, err := homedir.Dir()
 	if err != nil {
 		return nil, err
-	}
-
-	// If output expansion is not enabled, set the home directory to "~".
-	// This is useful for hiding the user's home directory.
-	if !cfg.ExpandOutput {
-		home = "~"
 	}
 
 	var m Mode
@@ -58,6 +54,7 @@ func New(cfg *config.Config) (*App, error) {
 		ch:           make(chan string, len(cfg.Sources)),
 		selectorType: selector.TypeFromStr(cfg.Selector),
 		sortType:     finder.SortTypeFromStr(cfg.Sort),
+		expandOutput: cfg.ExpandOutput,
 	}, nil
 }
 
@@ -95,11 +92,11 @@ func (a *App) selector() error {
 		return err
 	}
 
-	// The first character ("~") of the result is skipped.
-	// It's only used for display inside the selector.
-	//
-	// The expanded version of the result must be used;
-	// otherwise, it will not be able to be consumed by other programs.
+	if !a.expandOutput || !strings.HasPrefix(result, "~") {
+		_, err = os.Stdout.WriteString(result)
+		return err
+	}
+
 	_, err = os.Stdout.WriteString(a.home + result[1:])
 	return err
 }

@@ -37,7 +37,11 @@ func Run(opts *FinderOpts) {
 			defer wg.Done()
 
 			err := source.Find(ch, func(s string) string {
-				return "~" + strings.TrimPrefix(s, opts.HomeDir)
+				if strings.HasPrefix(source.OriginalPath, "~") {
+					return "~" + strings.TrimPrefix(s, opts.HomeDir)
+				}
+
+				return s
 			})
 
 			if err != nil {

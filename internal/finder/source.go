@@ -15,8 +15,9 @@ var ErrInvalidFormatFn = errors.New("invalid formatFn")
 
 // Source represents a directory source for finding paths.
 type Source struct {
-	Path  string `json:"path"`
-	Depth uint8  `json:"depth"`
+	Path         string
+	OriginalPath string `json:"path"`
+	Depth        uint8  `json:"depth"`
 
 	// Function to format the output path.
 	// Allows flexibility in other parts of the codebase (e.g., for testing).
@@ -31,13 +32,15 @@ func (s *Source) Find(resultCh chan<- string, formatFn func(string) string) erro
 
 	s.formatFn = formatFn
 
-	expanded, err := homedir.Expand(s.Path)
+	expanded, err := homedir.Expand(s.OriginalPath)
 	if err != nil {
 		return err
 	}
 
+	s.Path = expanded
+
 	// This prevents a wrong calculation of depth
-	s.Path = strings.TrimSuffix(expanded, "/")
+	s.Path = strings.TrimSuffix(s.Path, "/")
 
 	// Fastwalk is generally faster for deep directory structures,
 	// but for shallow searches, using just [os.ReadDir] or [os.Stat] is more efficient.
