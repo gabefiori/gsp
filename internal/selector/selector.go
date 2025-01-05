@@ -34,12 +34,12 @@ type Selector interface {
 func New(t Type) (Selector, error) {
 	switch t {
 	case TypeFzf:
-		return NewFzf(nil)
+		return NewCmd("fzf"), nil
 	case TypeFzy:
 		return NewCmd("fzy"), nil
 	case TypeSkim:
 		return NewCmd("sk"), nil
 	default:
-		return NewFzf(nil)
+		return NewCmd("fzf"), nil
 	}
 }
