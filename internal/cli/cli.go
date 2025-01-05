@@ -14,7 +14,7 @@ var (
 	flagConfig = &cli.StringFlag{
 		Name:      "config",
 		Aliases:   []string{"c"},
-		Usage:     "Load configuration from `file`",
+		Usage:     "Load configuration from the specified `file`",
 		Value:     "~/.config/gsp/config.json",
 		TakesFile: true,
 	}
@@ -22,40 +22,41 @@ var (
 	flagList = &cli.BoolFlag{
 		Name:    "list",
 		Aliases: []string{"l"},
-		Usage:   "List projects to stdout",
+		Usage:   "Print entries to stdout",
 		Value:   false,
 	}
 
 	flagMeasure = &cli.BoolFlag{
 		Name:    "measure",
 		Aliases: []string{"m"},
-		Usage:   "Measure performance (time taken and number of items processed)",
+		Usage:   "Measure performance (time taken and number of entries processed)",
 		Value:   false,
 	}
 
 	flagSelector = &cli.StringFlag{
 		Name:    "selector",
 		Aliases: []string{"sl"},
-		Usage:   "Selector for displaying projects (available options: 'fzf', 'fzy', 'sk')",
+		Usage:   "Selector for displaying entries (available options: 'fzf', 'fzy', 'sk')",
 	}
 
 	flagSort = &cli.StringFlag{
 		Name:    "sort",
 		Aliases: []string{"s"},
-		Usage:   "Specify the sort order (available options: 'asc', 'desc')",
+		Usage:   "Specify the sort order for displaying entries (available options: 'asc', 'desc', 'nosort')",
+		Value: "nosort",
 	}
 
 	flagUnique = &cli.BoolFlag{
 		Name:    "unique",
 		Aliases: []string{"u"},
-		Usage:   "Display only unique projects",
+		Usage:   "Display only unique entries",
 		Value:   false,
 	}
 
 	flagExpand = &cli.BoolFlag{
 		Name:    "expand-output",
 		Aliases: []string{"eo"},
-		Usage:   "Expand the output",
+		Usage:   "Expand selection output",
 		Value:   true,
 	}
 )
@@ -64,7 +65,7 @@ var (
 func Run(version string) error {
 	cmd := cli.Command{
 		Name:    "gsp",
-		Usage:   "select projects.",
+		Usage:   "Select projects.",
 		Version: version,
 		Action:  action,
 		Flags: []cli.Flag{

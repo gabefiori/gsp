@@ -122,11 +122,12 @@ Create a configuration file at `~/.config/gsp/config.json`:
 </details>
 
 <details>
-<summary>sort (optional, defaults to "")</summary>
+<summary>sort (optional, defaults to "nosort")</summary>
 
-> Defines the order in which the output is sorted. Available options are:
-> - `asc`: Sorts the output in ascending order.
-> - `desc`: Sorts the output in descending order.
+> Specifies the order in which the entries are displayed. The available options are:
+> - `asc`: Sorts entries in ascending order.
+> - `desc`: Sorts entries in descending order.
+> - `nosort`: Entries are not sorted.
 >
 > Enabling sorting may also have a slight impact on performance.
 
@@ -134,13 +135,13 @@ Create a configuration file at `~/.config/gsp/config.json`:
 
 ## CLI options
 ```sh
---config file, -c file        Load configuration from file (default: "~/.config/gsp/config.json")
---list, -l                    List projects to stdout (default: false)
---measure, -m                 Measure performance (time taken and number of items processed) (default: false)
---selector value, --sl value  Selector for displaying projects (available options: 'fzf', 'fzy', 'sk')
---sort value, -s value        Specify the sort order (available options: 'asc', 'desc')
---unique, -u                  Display only unique projects (default: false)
---expand-output, --eo         Expand the output (default: true)
+--config file, -c file        Load configuration from the specified file (default: "~/.config/gsp/config.json")
+--list, -l                    Print entries to stdout (default: false)
+--measure, -m                 Measure performance (time taken and number of entries processed) (default: false)
+--selector value, --sl value  Selector for displaying entries (available options: 'fzf', 'fzy', 'sk')
+--sort value, -s value        Specify the sort order for displaying entries (available options: 'asc', 'desc', 'nosort') (default: "nosort")
+--unique, -u                  Display only unique entries (default: false)
+--expand-output, --eo         Expand selection output (default: true)
 --help, -h                    show help
 --version, -v                 print the version
 ```
