@@ -4,10 +4,11 @@ A simple tool for quickly selecting projects.
 <img alt="Demo" src="examples/demo.gif" width="600" />
 
 ## Installation
-Check the [releases page](https://github.com/gabefiori/gsp/releases) to download the official binary.
+To download the official binary, please visit the [releases page](https://github.com/gabefiori/gsp/releases). 
+
+You will also need to have one of the supported fuzzy finders installed: [fzf](https://github.com/junegunn/fzf), [fzy](https://github.com/jhawthorn/fzy), or [skim](https://github.com/skim-rs/skim).
 
 Once the installation is complete, you can use the `gsp` command along with other commands in your shell.
-
 ### Examples with `cd`:
 
 <details>
@@ -134,11 +135,12 @@ Create a configuration file at `~/.config/gsp/config.json`:
 ## CLI options
 ```sh
 --config file, -c file        Load configuration from file (default: "~/.config/gsp/config.json")
---selector value, --sl value  Selector for displaying projects (available options: 'fzf', 'fzy') (default: "fzf")
+--list, -l                    List projects to stdout (default: false)
+--measure, -m                 Measure performance (time taken and number of items processed) (default: false)
+--selector value, --sl value  Selector for displaying projects (available options: 'fzf', 'fzy', 'sk') (default: "fzf")
 --sort value, -s value        Specify the sort order (available options: 'asc', 'desc')
 --unique, -u                  Display only unique projects (default: false)
 --expand-output, --eo         Expand the output (default: true)
---list, -l                    List projects to stdout (default: false)
---measure, -m                 Measure performance (time taken and number of items processed) (default: false)
 --help, -h                    show help
+--version, -v                 print the version
 ```
