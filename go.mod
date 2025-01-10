@@ -3,7 +3,6 @@ module github.com/gabefiori/gsp
 go 1.23
 
 require (
-	github.com/charlievieth/fastwalk v1.0.9
 	github.com/goccy/go-json v0.10.3
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/stretchr/testify v1.9.0

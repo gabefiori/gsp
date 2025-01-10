@@ -1,6 +1,7 @@
 package finder
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -15,30 +16,25 @@ func TestFind(t *testing.T) {
 	depth1Dir := filepath.Join(tempDir, "depth1")
 	depth2Dir := filepath.Join(tempDir, "depth1", "depth2")
 	depth3Dir := filepath.Join(tempDir, "depth1", "depth2", "depth3")
-	depth4Dir := filepath.Join(tempDir, "depth1", "depth2", "depth3", "depth4")
 
 	assert.NoError(t, os.Mkdir(depth1Dir, 0755))
 	assert.NoError(t, os.Mkdir(depth2Dir, 0755))
 	assert.NoError(t, os.Mkdir(depth3Dir, 0755))
-	assert.NoError(t, os.Mkdir(depth4Dir, 0755))
 
-	symlinkPath := filepath.Join(depth1Dir, "symlink_to_depth2")
-	assert.NoError(t, os.Symlink(depth2Dir, symlinkPath))
+	symlink1 := filepath.Join(depth1Dir, "symlink_to_depth2")
+	assert.NoError(t, os.Symlink(depth2Dir, symlink1))
 
 	tests := []struct {
-		name     string
 		depth    uint8
 		expected []string
 	}{
 		{
-			name:  "depthZero",
 			depth: 0,
 			expected: []string{
 				tempDir,
 			},
 		},
 		{
-			name:  "depthOne",
 			depth: 1,
 			expected: []string{
 				tempDir,
@@ -46,21 +42,29 @@ func TestFind(t *testing.T) {
 			},
 		},
 		{
-			name:  "depthGreater",
+			depth: 2,
+			expected: []string{
+				tempDir,
+				depth1Dir,
+				depth2Dir,
+				symlink1,
+			},
+		},
+		{
 			depth: 3,
 			expected: []string{
 				tempDir,
 				depth1Dir,
 				depth2Dir,
 				depth3Dir,
-				symlinkPath,
-				filepath.Join(symlinkPath, "depth3"),
+				symlink1,
+				filepath.Join(symlink1, "depth3"),
 			},
 		},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(fmt.Sprintf("Depth %d", tt.depth), func(t *testing.T) {
 			source := Source{OriginalPath: tempDir, Depth: tt.depth}
 			resultCh := make(chan string)
 
