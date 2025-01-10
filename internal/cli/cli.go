@@ -43,7 +43,7 @@ var (
 		Name:    "sort",
 		Aliases: []string{"s"},
 		Usage:   "Specify the sort order for displaying entries (available options: 'asc', 'desc', 'nosort')",
-		Value: "nosort",
+		Value:   "nosort",
 	}
 
 	flagUnique = &cli.BoolFlag{
