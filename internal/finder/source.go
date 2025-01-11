@@ -93,6 +93,15 @@ func (s *Source) walk(root string, currDepth uint8) error {
 		}
 
 		// is a symlink
+		info, err := entry.Info()
+		if err != nil {
+			return err
+		}
+
+		if info.Mode()&os.ModeSymlink == 0 {
+			continue
+		}
+
 		isDir, err := isPathDir(joined)
 		if err != nil {
 			return err
