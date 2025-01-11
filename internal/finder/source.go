@@ -14,8 +14,8 @@ var ErrInvalidRoot = errors.New("invalid root")
 // Source represents a directory source for finding paths.
 type Source struct {
 	Path         string
-	OriginalPath string `json:"path"`
-	Depth        uint8  `json:"depth"`
+	OriginalPath string
+	Depth        uint8
 
 	// Function to format the output path.
 	// Allows flexibility in other parts of the codebase (e.g., for testing).

@@ -15,7 +15,7 @@ var (
 		Name:      "config",
 		Aliases:   []string{"c"},
 		Usage:     "Load configuration from the specified `file`",
-		Value:     "~/.config/gsp/config.json",
+		Value:     "~/.config/gsp/config",
 		TakesFile: true,
 	}
 

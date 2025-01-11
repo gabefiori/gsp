@@ -5,18 +5,17 @@ import (
 	"os"
 
 	"github.com/gabefiori/gsp/internal/finder"
-	"github.com/goccy/go-json"
 	"github.com/mitchellh/go-homedir"
 )
 
 // Config represents the configuration structure for the application.
 type Config struct {
 	// List of sources to be used by the finder
-	Sources []finder.Source `json:"sources"`
+	Sources []finder.Source
 
 	// Flag to indicate if output should be expanded
 	// Useful to hide the user's home directory
-	ExpandOutput bool `json:"expand_output"`
+	ExpandOutput bool
 
 	// Flag to indicate if measurement should be performed
 	Measure bool
@@ -25,13 +24,13 @@ type Config struct {
 	List bool
 
 	// Selector for displaying the projects
-	Selector string `json:"selector"`
+	Selector string
 
 	// Flag to display only unique projects.
-	Unique bool `json:"unique"`
+	Unique bool
 
 	// Type of sorting.
-	Sort string `json:"sort"`
+	Sort string
 }
 
 type LoadParams struct {
@@ -62,8 +61,8 @@ func Load(params *LoadParams) (*Config, error) {
 
 	cfg.ExpandOutput = true
 
-	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&cfg); err != nil {
+	parser := NewParser(file, &cfg)
+	if err := parser.Run(); err != nil {
 		return nil, err
 	}
 
@@ -83,7 +82,7 @@ func Load(params *LoadParams) (*Config, error) {
 	}
 
 	if cfg.Selector == "" {
-		return nil, errors.New("Invalid selector")
+		return nil, errors.New("invalid selector")
 	}
 
 	if params.Sort != "" {

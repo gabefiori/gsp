@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"os"
 
 	"github.com/gabefiori/gsp/internal/cli"
 )
@@ -10,6 +11,7 @@ var version = "unknown"
 
 func main() {
 	if err := cli.Run(version); err != nil {
-		log.Fatal(err)
+		fmt.Printf("error: %s\n", err)
+		os.Exit(1)
 	}
 }

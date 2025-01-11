@@ -64,78 +64,34 @@ You can utilize this [script](/scripts/gsp-tmux.sh), which enables you to easily
 </details>
 
 ## Configuration
-Create a configuration file at `~/.config/gsp/config.json`:
+Create a configuration file at `~/.config/gsp/config`:
 
-```json
-{
-  "selector": "fzf",
-  "sort": "asc",
-  "unique": true,
-  "expand_output": true,
+```sh
+# Specifies the tool used for displaying projects. 
+# Available options are 'fzf', 'fzy' and 'sk'.
+selector = fzf
 
-  "sources": [
-    {
-      "path": "~/your/path",
-      "depth": 1
-    },
-    {
-      "path": "/home/you/your_other/path",
-      "depth": 3
-    }
-  ]
-}
+# Specifies the order in which the entries are displayed.
+# Available options are 'asc', 'desc' and 'nosort'.
+sort = asc
+
+# When set to 'true', the output will only display unique projects.
+# Optional. Defaults to 'false'.
+unique = false
+
+# Determines whether the output should be expanded to show additional details. 
+# Optional. Defaults to 'true'.
+expand-output = true
+
+# Sources are defined with <depth>:<path>.
+# Depth must be an unsigned 8-bit integer.
+source = 1:~/your/path
+source = 3:/home/you/your_other/path
 ```
-
-<details>
-<summary>sources</summary>
-
->  An array of source objects that specify the paths to search and their respective depth levels.
->
-> Each source object should contain:
-> - **`path`**: The directory path to search.
-> - **`depth`**: The depth level for searching within the specified path.
-
-</details>
-
-<details>
-<summary>expand_output (optional, defaults to "true")</summary>
-
-> Determines whether the output should be expanded to show additional details. Set to `false` to display only the basic information.
-
-</details>
-
-<details>
-<summary>selector</summary>
-
-> Specifies the tool used for displaying projects. Available options are:
-> - `fzf`: [source](https://github.com/junegunn/fzf).
-> - `fzy`: [source](https://github.com/jhawthorn/fzy).
-> - `sk`: [source](https://github.com/skim-rs/skim).
-
-</details>
-
-<details>
-<summary>unique (optional, defaults to "false")</summary>
-
-> When set to `true`, the output will only display unique projects. Note that enabling this option may slightly impact performance.
-
-</details>
-
-<details>
-<summary>sort (optional, defaults to "nosort")</summary>
-
-> Specifies the order in which the entries are displayed. The available options are:
-> - `asc`: Sorts entries in ascending order.
-> - `desc`: Sorts entries in descending order.
-> - `nosort`: Entries are not sorted.
->
-> Enabling sorting may also have a slight impact on performance.
-
-</details>
 
 ## CLI options
 ```sh
---config file, -c file        Load configuration from the specified file (default: "~/.config/gsp/config.json")
+--config file, -c file        Load configuration from the specified file (default: "~/.config/gsp/config")
 --list, -l                    Print entries to stdout (default: false)
 --measure, -m                 Measure performance (time taken and number of entries processed) (default: false)
 --selector value, --sl value  Selector for displaying entries (available options: 'fzf', 'fzy', 'sk')
