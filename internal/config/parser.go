@@ -25,7 +25,7 @@ func NewParser(r io.Reader, cfg *Config) *Parser {
 }
 
 func (p *Parser) Run() error {
-	for p.sc.Scan() {
+	for ; p.sc.Scan(); p.line++ {
 		line := strings.TrimSpace(p.sc.Text())
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
@@ -42,8 +42,6 @@ func (p *Parser) Run() error {
 		if err := p.field(key, val); err != nil {
 			return err
 		}
-
-		p.line++
 	}
 
 	return nil
@@ -81,5 +79,5 @@ func (p *Parser) field(k, v string) error {
 }
 
 func (p *Parser) lineErr(msg string) error {
-	return fmt.Errorf("failed to parse config %q on line %d.", msg, p.line+1)
+	return fmt.Errorf("failed to parse config %q on line %d.", msg, p.line)
 }

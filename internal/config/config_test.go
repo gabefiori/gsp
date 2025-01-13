@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLoad(t *testing.T) {
+func TestConfig_Load(t *testing.T) {
 	tempFile, err := os.CreateTemp("", "config")
 	assert.NoError(t, err)
 
@@ -75,7 +75,7 @@ func TestLoad(t *testing.T) {
 	})
 }
 
-func BenchmarkLoad(b *testing.B) {
+func BenchmarkConfig_Load(b *testing.B) {
 	tempFile, err := os.CreateTemp("", "config.json")
 	assert.NoError(b, err)
 
