@@ -115,7 +115,7 @@ func optionalBoolFlag(f *cli.BoolFlag, c *cli.Command) int8 {
 		return 0
 	}
 
-	if c.Bool(flagExpand.Name) {
+	if c.Bool(f.Name) {
 		return 1
 	}
 
