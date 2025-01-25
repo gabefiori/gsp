@@ -1,4 +1,10 @@
 # gsp
+
+![GitHub Release](https://img.shields.io/github/v/release/gabefiori/gsp)
+![test](https://github.com/gabefiori/gsp/actions/workflows/test.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gabefiori/gsp)](https://goreportcard.com/report/github.com/gabefiori/gsp)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/gabefiori/color)](https://pkg.go.dev/github.com/gabefiori/gsp)
+
 A simple tool for quickly selecting projects.
 
 <img alt="Demo" src="examples/demo.gif" width="600" />
